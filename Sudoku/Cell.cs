@@ -16,20 +16,12 @@ namespace Sudoku
             AutoSize = false;
             Dock = DockStyle.Fill;
             TextAlign = ContentAlignment.MiddleCenter;
-            Click += onClick;
+            BackColor = Color.Transparent;
         }
 
         public Cell(char character) : this()
         {
             Text = character.ToString();
-        }
-
-        private void onClick(object sender, EventArgs e)
-        {
-            Label cell = sender as Label;
-            Dial f = new Dial();
-            f.ShowDialog();
-            cell.Text = f.getResult().ToString();
         }
     }
 }
