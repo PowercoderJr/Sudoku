@@ -12,21 +12,26 @@ namespace Sudoku
         public const int BASE = 3;
         public const int FIELD_SIZE = BASE * BASE;
         public const int SWAPS = 20;
+        public const int MIN_INIT_INDEX = 3;
+        public const int ELIGIBLE_INDEX = 4;
+        public const int MAX_INIT_INDEX = 5;
         
+        private int[,] initialState;
         private int[,] field;
+        private int[,] solution;
 
         public Game()
         {
+            initialState = new int[FIELD_SIZE, FIELD_SIZE];
             field = new int[FIELD_SIZE, FIELD_SIZE];
+            solution = new int[FIELD_SIZE, FIELD_SIZE];
         }
 
-        public void generateField()
+        public void generateLevel()
         {
             //Подготовка
             Random randomizer = new Random();
             int[] seed = new int[9];
-            for (int i = 0; i < FIELD_SIZE; ++i)
-                seed[i] = 0;
 
             int pos;
             for (int i = 1; i <= FIELD_SIZE; ++i)
@@ -43,7 +48,7 @@ namespace Sudoku
                 int reali = i * BASE % FIELD_SIZE + i * BASE / FIELD_SIZE;
                 for (int j = 0; j < FIELD_SIZE; ++j)
                 {
-                    field[reali, j] = seed[(j + i) % FIELD_SIZE];
+                    solution[reali, j] = seed[(j + i) % FIELD_SIZE];
                 }
             }
 
@@ -57,9 +62,9 @@ namespace Sudoku
                 if (a != b)
                     for (int j = 0; j < FIELD_SIZE; ++j)
                     {
-                        buf = field[a, j];
-                        field[a, j] = field[b, j];
-                        field[b, j] = buf;
+                        buf = solution[a, j];
+                        solution[a, j] = solution[b, j];
+                        solution[b, j] = buf;
                     }
 
                 street = randomizer.Next(BASE);
@@ -68,9 +73,9 @@ namespace Sudoku
                 if (a != b)
                     for (int j = 0; j < FIELD_SIZE; ++j)
                     {
-                        buf = field[j, a];
-                        field[j, a] = field[j, b];
-                        field[j, b] = buf;
+                        buf = solution[j, a];
+                        solution[j, a] = solution[j, b];
+                        solution[j, b] = buf;
                     }
             }
 
@@ -82,9 +87,9 @@ namespace Sudoku
                     for (int j = 0; j < BASE; ++j)
                         for (int k = 0; k < FIELD_SIZE; ++k)
                         {
-                            buf = field[a * 3 + j, k];
-                            field[a * 3 + j, k] = field[b * 3 + j, k];
-                            field[b * 3 + j, k] = buf;
+                            buf = solution[a * BASE + j, k];
+                            solution[a * BASE + j, k] = solution[b * BASE + j, k];
+                            solution[b * BASE + j, k] = buf;
                         }
 
                 a = randomizer.Next(BASE);
@@ -93,16 +98,63 @@ namespace Sudoku
                     for (int j = 0; j < BASE; ++j)
                         for (int k = 0; k < FIELD_SIZE; ++k)
                         {
-                            buf = field[k, a * 3 + j];
-                            field[k, a * 3 + j] = field[k, b * 3 + j];
-                            field[k, b * 3 + j] = buf;
+                            buf = solution[k, a * BASE + j];
+                            solution[k, a * BASE + j] = solution[k, b * BASE + j];
+                            solution[k, b * BASE + j] = buf;
                         }
             }
+
+            //Определение начального состояния
+            Array.Clear(initialState, 0, initialState.Length);
+            int[] columnVolumes = new int[FIELD_SIZE];
+            int[,] boxVolumes = new int[BASE,BASE];
+            for (int i = 0; i < FIELD_SIZE; ++i)
+            {
+                int rowIndex = 0;
+                for (int j = 0; j < 3 && rowIndex != ELIGIBLE_INDEX; ++j)
+                    rowIndex = randomizer.Next(MIN_INIT_INDEX, MAX_INIT_INDEX + 1);
+                do
+                {
+                    int attempts = 0;
+                    bool success = false;
+                    pos = randomizer.Next(FIELD_SIZE);
+                    do
+                    {
+                        if (initialState[i, pos] == 0 && columnVolumes[pos] < MAX_INIT_INDEX && boxVolumes[i / BASE, pos / BASE] < MAX_INIT_INDEX)
+                        {
+                            initialState[i, pos] = solution[i, pos];
+                            ++columnVolumes[pos];
+                            ++boxVolumes[i / BASE, pos / BASE];
+                            success = true;
+                        }
+                        else
+                        {
+                            pos = (pos + 1) % FIELD_SIZE;
+                        }
+                    } while (!success && attempts++ < FIELD_SIZE);
+                } while (--rowIndex > 0);
+            }
+            setInitState();
+        }
+
+        public void setInitState()
+        {
+            field = (int[,])initialState.Clone();
+        }
+
+        public int[,] getInitialState()
+        {
+            return initialState;
         }
 
         public int[,] getField()
         {
             return field;
+        }
+
+        public int[,] getSolution()
+        {
+            return solution;
         }
     }
 }

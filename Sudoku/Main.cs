@@ -53,16 +53,32 @@ namespace Sudoku
 
         private void restart()
         {
-            game.generateField();
-            int[,] temp = game.getField();
+            game.generateLevel();
+            fillCells();
+        }
+
+        private void clear()
+        {
+            game.setInitState();
+            fillCells();
+        }
+
+        private void fillCells()
+        {
+            int[,] field = game.getField();
             for (int i = 0; i < Game.FIELD_SIZE; ++i)
                 for (int j = 0; j < Game.FIELD_SIZE; ++j)
-                    cells[j, i].Text = temp[i, j].ToString();
+                    cells[j, i].Text = field[i, j] == 0 ? "" : field[i, j].ToString();
+        }
+
+        private void создатьПолеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            restart();
         }
 
         private void начатьСначалаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            restart();
+            clear();
         }
     }
 }

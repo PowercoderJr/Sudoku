@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.играToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.создатьПолеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.начатьСначалаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.проверитьОшибкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bgpanel = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
@@ -53,25 +53,25 @@
             // играToolStripMenuItem
             // 
             this.играToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.начатьСначалаToolStripMenuItem,
-            this.проверитьОшибкиToolStripMenuItem});
+            this.создатьПолеToolStripMenuItem,
+            this.начатьСначалаToolStripMenuItem});
             this.играToolStripMenuItem.Name = "играToolStripMenuItem";
             this.играToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.играToolStripMenuItem.Text = "Игра";
             // 
+            // создатьПолеToolStripMenuItem
+            // 
+            this.создатьПолеToolStripMenuItem.Name = "создатьПолеToolStripMenuItem";
+            this.создатьПолеToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.создатьПолеToolStripMenuItem.Text = "Новая игра";
+            this.создатьПолеToolStripMenuItem.Click += new System.EventHandler(this.создатьПолеToolStripMenuItem_Click);
+            // 
             // начатьСначалаToolStripMenuItem
             // 
             this.начатьСначалаToolStripMenuItem.Name = "начатьСначалаToolStripMenuItem";
-            this.начатьСначалаToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.начатьСначалаToolStripMenuItem.Text = "Начать сначала";
+            this.начатьСначалаToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.начатьСначалаToolStripMenuItem.Text = "Очистить поле";
             this.начатьСначалаToolStripMenuItem.Click += new System.EventHandler(this.начатьСначалаToolStripMenuItem_Click);
-            // 
-            // проверитьОшибкиToolStripMenuItem
-            // 
-            this.проверитьОшибкиToolStripMenuItem.Enabled = false;
-            this.проверитьОшибкиToolStripMenuItem.Name = "проверитьОшибкиToolStripMenuItem";
-            this.проверитьОшибкиToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.проверитьОшибкиToolStripMenuItem.Text = "Проверить ошибки";
             // 
             // bgpanel
             // 
@@ -136,9 +136,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem играToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem начатьСначалаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem проверитьОшибкиToolStripMenuItem;
         private System.Windows.Forms.Panel bgpanel;
         private System.Windows.Forms.TableLayoutPanel grid;
+        private System.Windows.Forms.ToolStripMenuItem создатьПолеToolStripMenuItem;
     }
 }
 
