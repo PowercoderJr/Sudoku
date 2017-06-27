@@ -4,24 +4,36 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Sudoku
 {
-    class Cell : Label
+    class Cell
     {
-        public Cell() : base()
+        private int number;
+        private Color color;
+        private bool isColorChanged;
+
+        public Cell()
         {
-            Font = new Font(new FontFamily("Courier New"), 36, FontStyle.Bold);
-            AutoSize = false;
-            Dock = DockStyle.Fill;
-            TextAlign = ContentAlignment.MiddleCenter;
-            BackColor = Color.Transparent;
+            number = 0;
+            color = Color.Black;
+            isColorChanged = false;
         }
 
-        public Cell(char character) : this()
+        public int Number
         {
-            Text = character.ToString();
+            get { return number; }
+            set { number = value; }
+        }
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+        public bool IsColorChanged
+        {
+            get { return isColorChanged; }
+            set { isColorChanged = value; }
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -134,10 +136,20 @@ namespace Sudoku
                     } while (!success && attempts++ < FIELD_SIZE);
                 } while (--rowIndex > 0);
             }
-            setInitState();
+            setInitialState();
         }
 
-        public void setInitState()
+        public List<Point> findRepetitionsInSubmatrix(int x1, int y1, int x2, int y2, int target, int xignore, int yignore)
+        {
+            List<Point> result = new List<Point>();
+            for (int i = x1; i <= x2; ++i)
+                for (int j = y1; j <= y2; ++j)
+                    if (field[i, j] == target && !(i == xignore && j == yignore))
+                        result.Add(new Point(i, j));
+            return result;
+        }
+
+        public void setInitialState()
         {
             field = (int[,])initialState.Clone();
         }
