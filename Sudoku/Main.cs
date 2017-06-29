@@ -31,6 +31,7 @@ namespace Sudoku
                     cell.BackColor = Color.Transparent;
                     cell.ForeColor = Color.Black;
                     cell.Click += onCellClicked;
+                    //cell.Margin.Top = 0;
                     cells[i, j] = cell;
                     grid.Controls.Add(cell, j, i);
                 }
@@ -43,8 +44,8 @@ namespace Sudoku
         {
             Label cell = sender as Label;
             int i = grid.GetRow(cell), j = grid.GetColumn(cell);
-            int[,] field = game.getField();
-            if (game.getInitialState()[i, j] == 0)
+            int[,] field = game.Field;
+            if (game.InitialState[i, j] == 0)
             {
                 int oldValue = field[i, j];
                 field[i, j] = 0;
@@ -56,8 +57,8 @@ namespace Sudoku
                         int digit;
                         if (подсказкаToolStripMenuItem.Checked)
                         {
-                            digit = game.getSolution()[i, j];
-                            подсказкаToolStripMenuItem.Checked = false;
+                            digit = game.Solution[i, j];
+                            switchHintMode(false);
                         }
                         else
                         {
@@ -75,24 +76,32 @@ namespace Sudoku
                 }
                 updateColors(i, j, 0, true);
             }
+            refreshStatusLabel();
         }
 
         private void restart()
         {
             game.generateLevel();
             fillCells();
+            refreshStatusLabel();
         }
 
         private void clear()
         {
             game.setInitialState();
             fillCells();
+            refreshStatusLabel();
+        }
+
+        private void refreshStatusLabel()
+        {
+            statusLabel.Text = game.CorrectCells + " / " + Game.FIELD_SIZE * Game.FIELD_SIZE;
         }
 
         private void fillCells()
         {
-            int[,] field = game.getField();
-            int[,] initialState = game.getInitialState();
+            int[,] field = game.Field;
+            int[,] initialState = game.InitialState;
             for (int i = 0; i < Game.FIELD_SIZE; ++i)
                 for (int j = 0; j < Game.FIELD_SIZE; ++j)
                 {
@@ -101,34 +110,60 @@ namespace Sudoku
                         cells[i, j].ForeColor = Color.DarkGreen;
                     else
                         cells[i, j].ForeColor = Color.Black;
-
                 }
         }
 
         private void updateColors(int i, int j, int oldValue, bool recursive)
         {
             Label target = cells[i, j];
-            int[,] field = game.getField();
-            int value = oldValue > 0 ? oldValue : field[i, j];
+            int[,] field = game.Field;
+            int value = field[i, j];
+            int checkingFor = oldValue > 0 ? oldValue : field[i, j];
             int boxi = i / Game.BASE, boxj = j / Game.BASE;
 
-            if (value > 0)
+            if (checkingFor > 0)
             {
-                List<Point> repetitions = game.findRepetitionsInSubmatrix(i, 0, i, Game.FIELD_SIZE - 1, value, i, j);
-                repetitions.AddRange(game.findRepetitionsInSubmatrix(0, j, Game.FIELD_SIZE - 1, j, value, i, j));
+                List<Point> repetitions = game.findRepetitionsInSubmatrix(i, 0, i, Game.FIELD_SIZE - 1, checkingFor, i, j);
+                repetitions.AddRange(game.findRepetitionsInSubmatrix(0, j, Game.FIELD_SIZE - 1, j, checkingFor, i, j));
                 repetitions.AddRange(game.findRepetitionsInSubmatrix(boxi * Game.BASE, boxj * Game.BASE,
-                    boxi * Game.BASE + Game.BASE - 1, boxj * Game.BASE + Game.BASE - 1, value, i, j));
+                    boxi * Game.BASE + Game.BASE - 1, boxj * Game.BASE + Game.BASE - 1, checkingFor, i, j));
 
                 if (target.ForeColor != Color.DarkGreen)
+                {
+                    bool correct;
                     if (repetitions.Count == 0)
+                    {
                         target.ForeColor = Color.Black;
+                        correct = true;
+                    }
                     else
+                    {
                         target.ForeColor = Color.DarkRed;
+                        correct = false;
+                    }
+
+                    if (correct && value > 0 && !game.CorrectnessTable[i, j])
+                    {
+                        ++game.CorrectCells;
+                        game.CorrectnessTable[i, j] = true;
+                    }
+                    else if ((!correct || value == 0) && game.CorrectnessTable[i, j])
+                    {
+                        --game.CorrectCells;
+                        game.CorrectnessTable[i, j] = false;
+                    }
+                }
 
                 if (recursive)
                     for (int k = 0; k < repetitions.Count; ++k)
                         updateColors(repetitions[k].X, repetitions[k].Y, oldValue, false);
             }
+        }
+
+        private void switchHintMode(bool hintMode)
+        {
+            подсказкаToolStripMenuItem.Checked = hintMode;
+            grid.Cursor = hintMode ? Cursors.Help : Cursors.Default;
         }
 
         private void создатьПолеToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,7 +178,7 @@ namespace Sudoku
 
         private void подсказкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            switchHintMode(подсказкаToolStripMenuItem.Checked);
         }
     }
 }

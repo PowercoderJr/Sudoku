@@ -21,12 +21,15 @@ namespace Sudoku
         private int[,] initialState;
         private int[,] field;
         private int[,] solution;
+        private bool[,] correctnessTable;
+        private int correctCells;
 
         public Game()
         {
             initialState = new int[FIELD_SIZE, FIELD_SIZE];
             field = new int[FIELD_SIZE, FIELD_SIZE];
             solution = new int[FIELD_SIZE, FIELD_SIZE];
+            correctnessTable = new bool[FIELD_SIZE, FIELD_SIZE];
         }
 
         public void generateLevel()
@@ -152,21 +155,40 @@ namespace Sudoku
         public void setInitialState()
         {
             field = (int[,])initialState.Clone();
+            correctCells = 0;
+            for (int i = 0; i < FIELD_SIZE; ++i)
+                for (int j = 0; j < FIELD_SIZE; ++j)
+                    if (field[i, j] > 0)
+                    {
+                        correctnessTable[i, j] = true;
+                        ++correctCells;
+                    }
         }
 
-        public int[,] getInitialState()
+        public int[,] InitialState
         {
-            return initialState;
+            get {return initialState;}
         }
 
-        public int[,] getField()
+        public int[,] Field
         {
-            return field;
+            get { return field; }
         }
 
-        public int[,] getSolution()
+        public int[,] Solution
         {
-            return solution;
+            get { return solution; }
+        }
+
+        public bool[,] CorrectnessTable
+        {
+            get { return correctnessTable; }
+        }
+
+        public int CorrectCells
+        {
+            get { return correctCells; }
+            set { correctCells = value; }
         }
     }
 }
