@@ -91,7 +91,7 @@ namespace Sudoku
                         cells[i, j].ForeColor = Color.DarkGreen;
                     else
                         cells[i, j].ForeColor = Color.Black;
-                        
+
                 }
         }
 
@@ -99,43 +99,25 @@ namespace Sudoku
         {
             Label target = cells[i, j];
             int[,] field = game.getField();
-            int value = field[i, j];
-            //int value = field[i, j] == 0 ? oldValue : field[i, j];
+            int value = oldValue > 0 ? oldValue : field[i, j];
             int boxi = i / Game.BASE, boxj = j / Game.BASE;
 
-            if (oldValue > 0)
+            if (value > 0)
             {
-                List<Point> repetitions = game.findRepetitionsInSubmatrix(i, 0, i, Game.FIELD_SIZE - 1, oldValue, i, j);
-                repetitions.AddRange(game.findRepetitionsInSubmatrix(0, j, Game.FIELD_SIZE - 1, j, oldValue, i, j));
-                repetitions.AddRange(game.findRepetitionsInSubmatrix(boxi*Game.BASE, boxj*Game.BASE,
-                    boxi * Game.BASE + Game.BASE - 1, boxj * Game.BASE + Game.BASE - 1, oldValue, i, j));
+                List<Point> repetitions = game.findRepetitionsInSubmatrix(i, 0, i, Game.FIELD_SIZE - 1, value, i, j);
+                repetitions.AddRange(game.findRepetitionsInSubmatrix(0, j, Game.FIELD_SIZE - 1, j, value, i, j));
+                repetitions.AddRange(game.findRepetitionsInSubmatrix(boxi * Game.BASE, boxj * Game.BASE,
+                    boxi * Game.BASE + Game.BASE - 1, boxj * Game.BASE + Game.BASE - 1, value, i, j));
 
-                if (repetitions.Count == 0 && target.ForeColor != Color.DarkGreen)
-                    target.ForeColor = Color.Black;
+                if (target.ForeColor != Color.DarkGreen)
+                    if (repetitions.Count == 0)
+                        target.ForeColor = Color.Black;
+                    else
+                        target.ForeColor = Color.DarkRed;
 
                 if (recursive)
                     for (int k = 0; k < repetitions.Count; ++k)
                         updateColors(repetitions[k].X, repetitions[k].Y, oldValue, false);
-            }
-            else
-            {
-                if (value > 0)
-                {
-                    List<Point> repetitions = game.findRepetitionsInSubmatrix(i, 0, i, Game.FIELD_SIZE - 1, value, i, j);
-                    repetitions.AddRange(game.findRepetitionsInSubmatrix(0, j, Game.FIELD_SIZE - 1, j, value, i, j));
-                    repetitions.AddRange(game.findRepetitionsInSubmatrix(boxi*Game.BASE, boxj*Game.BASE,
-                        boxi*Game.BASE + Game.BASE - 1, boxj*Game.BASE + Game.BASE - 1, value, i, j));
-
-                    if (target.ForeColor != Color.DarkGreen)
-                        if (repetitions.Count > 0)
-                            target.ForeColor = Color.DarkRed;
-                        else
-                            target.ForeColor = Color.Black;
-
-                    if (recursive)
-                        for (int k = 0; k < repetitions.Count; ++k)
-                            updateColors(repetitions[k].X, repetitions[k].Y, oldValue, false);
-                }
             }
         }
 
