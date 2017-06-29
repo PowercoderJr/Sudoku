@@ -35,6 +35,8 @@
             this.начатьСначалаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bgpanel = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.подсказкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.bgpanel.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +56,9 @@
             // 
             this.играToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьПолеToolStripMenuItem,
-            this.начатьСначалаToolStripMenuItem});
+            this.начатьСначалаToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.подсказкаToolStripMenuItem});
             this.играToolStripMenuItem.Name = "играToolStripMenuItem";
             this.играToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.играToolStripMenuItem.Text = "Игра";
@@ -113,6 +117,19 @@
             this.grid.Size = new System.Drawing.Size(524, 524);
             this.grid.TabIndex = 1;
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(153, 6);
+            // 
+            // подсказкаToolStripMenuItem
+            // 
+            this.подсказкаToolStripMenuItem.CheckOnClick = true;
+            this.подсказкаToolStripMenuItem.Name = "подсказкаToolStripMenuItem";
+            this.подсказкаToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.подсказкаToolStripMenuItem.Text = "Подсказка";
+            this.подсказкаToolStripMenuItem.Click += new System.EventHandler(this.подсказкаToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,6 +156,8 @@
         private System.Windows.Forms.Panel bgpanel;
         private System.Windows.Forms.TableLayoutPanel grid;
         private System.Windows.Forms.ToolStripMenuItem создатьПолеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem подсказкаToolStripMenuItem;
     }
 }
 

@@ -32,7 +32,7 @@ namespace Sudoku
                     cell.ForeColor = Color.Black;
                     cell.Click += onCellClicked;
                     cells[i, j] = cell;
-                    grid.Controls.Add(cells[i, j], j, i);
+                    grid.Controls.Add(cell, j, i);
                 }
 
             game = new Game();
@@ -53,10 +53,20 @@ namespace Sudoku
                 switch ((e as MouseEventArgs).Button)
                 {
                     case MouseButtons.Left:
-                        Dial f = new Dial();
-                        f.ShowDialog();
-                        field[i, j] = f.getResult();
-                        cell.Text = f.getResult().ToString();
+                        int digit;
+                        if (подсказкаToolStripMenuItem.Checked)
+                        {
+                            digit = game.getSolution()[i, j];
+                            подсказкаToolStripMenuItem.Checked = false;
+                        }
+                        else
+                        {
+                            Dial f = new Dial();
+                            f.ShowDialog();
+                            digit = f.getResult();
+                        }
+                        field[i, j] = digit;
+                        cell.Text = digit.ToString();
                         break;
                     case MouseButtons.Right:
                         field[i, j] = 0;
@@ -129,6 +139,11 @@ namespace Sudoku
         private void начатьСначалаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clear();
+        }
+
+        private void подсказкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
