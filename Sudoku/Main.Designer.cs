@@ -39,6 +39,7 @@
             this.grid = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.победитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.bgpanel.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -61,7 +62,8 @@
             this.создатьПолеToolStripMenuItem,
             this.начатьСначалаToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.подсказкаToolStripMenuItem});
+            this.подсказкаToolStripMenuItem,
+            this.победитьToolStripMenuItem});
             this.играToolStripMenuItem.Name = "играToolStripMenuItem";
             this.играToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.играToolStripMenuItem.Text = "Игра";
@@ -99,7 +101,7 @@
             this.bgpanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bgpanel.Location = new System.Drawing.Point(0, 24);
             this.bgpanel.Name = "bgpanel";
-            this.bgpanel.Size = new System.Drawing.Size(524, 568);
+            this.bgpanel.Size = new System.Drawing.Size(524, 564);
             this.bgpanel.TabIndex = 2;
             // 
             // grid
@@ -132,7 +134,7 @@
             this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
             this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
             this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.grid.Size = new System.Drawing.Size(524, 546);
+            this.grid.Size = new System.Drawing.Size(524, 542);
             this.grid.TabIndex = 1;
             // 
             // statusStrip1
@@ -140,7 +142,7 @@
             this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 570);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 566);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(524, 22);
             this.statusStrip1.TabIndex = 3;
@@ -152,12 +154,19 @@
             this.statusLabel.Size = new System.Drawing.Size(83, 17);
             this.statusLabel.Text = "Здравствуйте!";
             // 
+            // победитьToolStripMenuItem
+            // 
+            this.победитьToolStripMenuItem.Name = "победитьToolStripMenuItem";
+            this.победитьToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.победитьToolStripMenuItem.Text = "Победить";
+            this.победитьToolStripMenuItem.Click += new System.EventHandler(this.победитьToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(524, 592);
+            this.ClientSize = new System.Drawing.Size(524, 588);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bgpanel);
             this.Controls.Add(this.menuStrip1);
@@ -185,6 +194,7 @@
         private System.Windows.Forms.ToolStripMenuItem подсказкаToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.ToolStripMenuItem победитьToolStripMenuItem;
     }
 }
 

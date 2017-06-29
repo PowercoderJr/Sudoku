@@ -5,7 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Sudoku
@@ -19,6 +21,7 @@ namespace Sudoku
         {
             InitializeComponent();
 
+            Padding margin = new Padding(0, 0, 0, 0);
             cells = new Label[Game.FIELD_SIZE, Game.FIELD_SIZE];
             for (int i = 0; i < Game.FIELD_SIZE; ++i)
                 for (int j = 0; j < Game.FIELD_SIZE; ++j)
@@ -31,7 +34,9 @@ namespace Sudoku
                     cell.BackColor = Color.Transparent;
                     cell.ForeColor = Color.Black;
                     cell.Click += onCellClicked;
-                    //cell.Margin.Top = 0;
+                    /*cell.MouseEnter += (sender, args) => (sender as Label).BackColor = Color.FromArgb(100, 0, 255, 255);
+                    cell.MouseLeave += (sender, args) => (sender as Label).BackColor = Color.Transparent;*/
+                    cell.Margin = margin;
                     cells[i, j] = cell;
                     grid.Controls.Add(cell, j, i);
                 }
@@ -49,7 +54,7 @@ namespace Sudoku
             {
                 int oldValue = field[i, j];
                 field[i, j] = 0;
-                updateColors(i, j, oldValue, true);
+                checkCell(i, j, oldValue, true);
 
                 switch ((e as MouseEventArgs).Button)
                 {
@@ -74,9 +79,14 @@ namespace Sudoku
                         cell.Text = "";
                         break;
                 }
-                updateColors(i, j, 0, true);
+                checkCell(i, j, 0, true);
             }
             refreshStatusLabel();
+            if (game.CorrectCells == Game.FIELD_SIZE*Game.FIELD_SIZE)
+            {
+                Thread victoryThread = new Thread(victory);
+                victoryThread.Start();
+            }
         }
 
         private void restart()
@@ -97,6 +107,31 @@ namespace Sudoku
         {
             statusLabel.Text = game.CorrectCells + " / " + Game.FIELD_SIZE * Game.FIELD_SIZE;
         }
+        
+        private void victory()
+        {
+            int waveCount = Game.FIELD_SIZE * 2 - Game.FIELD_SIZE % 2;
+            for (int l = 0; l < waveCount; ++l)
+            {
+                Thread anotherThread = new Thread(() =>
+                {
+                    int i = l;
+                    for (int k = 200; k >= 0; k -= 10)
+                    {
+                        for (int j = 0; j <= i; ++j)
+                        {
+                            if (i - j < Game.FIELD_SIZE && j < Game.FIELD_SIZE)
+                            {
+                                cells[i - j, j].BackColor = Color.FromArgb(k, 0, 255, 0);
+                            }
+                        }
+                        Thread.Sleep(30);
+                    }
+                });
+                anotherThread.Start();
+                Thread.Sleep(1000 / waveCount);
+            }
+        }
 
         private void fillCells()
         {
@@ -113,7 +148,7 @@ namespace Sudoku
                 }
         }
 
-        private void updateColors(int i, int j, int oldValue, bool recursive)
+        private void checkCell(int i, int j, int oldValue, bool recursive)
         {
             Label target = cells[i, j];
             int[,] field = game.Field;
@@ -156,7 +191,7 @@ namespace Sudoku
 
                 if (recursive)
                     for (int k = 0; k < repetitions.Count; ++k)
-                        updateColors(repetitions[k].X, repetitions[k].Y, oldValue, false);
+                        checkCell(repetitions[k].X, repetitions[k].Y, oldValue, false);
             }
         }
 
@@ -179,6 +214,22 @@ namespace Sudoku
         private void подсказкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             switchHintMode(подсказкаToolStripMenuItem.Checked);
+        }
+
+        private void победитьToolStripMenuItem_Click(object sender, EventArgs e) //Метод для отладки
+        {
+            for (int i = 0; i < Game.FIELD_SIZE; ++i)
+                for (int j = 0; j < Game.FIELD_SIZE; ++j)
+                {
+                    game.Field[i, j] = game.Solution[i, j];
+                    game.CorrectnessTable[i, j] = true;
+                }
+            game.CorrectCells = Game.FIELD_SIZE*Game.FIELD_SIZE;
+            fillCells();
+            refreshStatusLabel();
+
+            Thread victoryThread = new Thread(victory);
+            victoryThread.Start();
         }
     }
 }
