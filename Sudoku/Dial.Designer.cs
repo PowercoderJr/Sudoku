@@ -49,6 +49,7 @@
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.pick);
+            this.button1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button2
             // 
@@ -60,6 +61,7 @@
             this.button2.Text = "2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.pick);
+            this.button2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button3
             // 
@@ -71,6 +73,7 @@
             this.button3.Text = "3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.pick);
+            this.button3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button4
             // 
@@ -82,6 +85,7 @@
             this.button4.Text = "6";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.pick);
+            this.button4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button5
             // 
@@ -93,6 +97,7 @@
             this.button5.Text = "5";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.pick);
+            this.button5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button6
             // 
@@ -104,6 +109,7 @@
             this.button6.Text = "4";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.pick);
+            this.button6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button7
             // 
@@ -115,6 +121,7 @@
             this.button7.Text = "9";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.pick);
+            this.button7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button8
             // 
@@ -126,6 +133,7 @@
             this.button8.Text = "8";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.pick);
+            this.button8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // button9
             // 
@@ -137,6 +145,7 @@
             this.button9.Text = "7";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.pick);
+            this.button9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             // 
             // Dial
             // 
@@ -158,6 +167,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "dial";
             this.TransparencyKey = System.Drawing.Color.Transparent;
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Dial_KeyPress);
             this.ResumeLayout(false);
 
         }

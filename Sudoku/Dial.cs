@@ -31,5 +31,19 @@ namespace Sudoku
         {
             return result;
         }
+
+        private void Dial_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar >= '0' && e.KeyChar <= '9')
+            {
+                result = e.KeyChar - '0';
+                Close();
+            }
+            else if (e.KeyChar == 27)
+            {
+                result = -1;
+                Close();
+            }
+        }
     }
 }

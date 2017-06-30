@@ -14,8 +14,11 @@ namespace Sudoku
 {
     public partial class Main : Form
     {
+        private static Color CURSOR_COLOR = Color.FromArgb(100, 0, 255, 255);
+
         private Game game;
         private Label[,] cells;
+        private int cursori, cursorj;
 
         public Main()
         {
@@ -34,8 +37,17 @@ namespace Sudoku
                     cell.BackColor = Color.Transparent;
                     cell.ForeColor = Color.Black;
                     cell.Click += onCellClicked;
-                    /*cell.MouseEnter += (sender, args) => (sender as Label).BackColor = Color.FromArgb(100, 0, 255, 255);
-                    cell.MouseLeave += (sender, args) => (sender as Label).BackColor = Color.Transparent;*/
+                    cell.MouseEnter += (sender, args) =>
+                    {
+                        cells[cursori, cursorj].BackColor = Color.Transparent;
+                        (sender as Label).BackColor = CURSOR_COLOR;
+                        cursori = grid.GetRow(cell);
+                        cursorj = grid.GetColumn(cell);
+                    };
+                    cell.MouseLeave += (sender, args) =>
+                    {
+                        (sender as Label).BackColor = Color.Transparent;
+                    };
                     cell.Margin = margin;
                     cells[i, j] = cell;
                     grid.Controls.Add(cell, j, i);
@@ -49,17 +61,12 @@ namespace Sudoku
         {
             Label cell = sender as Label;
             int i = grid.GetRow(cell), j = grid.GetColumn(cell);
-            int[,] field = game.Field;
             if (game.InitialState[i, j] == 0)
             {
-                int oldValue = field[i, j];
-                field[i, j] = 0;
-                checkCell(i, j, oldValue, true);
-
+                int digit = -1;
                 switch ((e as MouseEventArgs).Button)
                 {
                     case MouseButtons.Left:
-                        int digit;
                         if (подсказкаToolStripMenuItem.Checked)
                         {
                             digit = game.Solution[i, j];
@@ -71,18 +78,30 @@ namespace Sudoku
                             f.ShowDialog();
                             digit = f.getResult();
                         }
-                        field[i, j] = digit;
-                        cell.Text = digit.ToString();
                         break;
                     case MouseButtons.Right:
-                        field[i, j] = 0;
-                        cell.Text = "";
+                        digit = 0;
                         break;
                 }
-                checkCell(i, j, 0, true);
+
+                if (digit >= 0 && digit <= 9)
+                    handleCellInput(cell, digit);
             }
+        }
+
+        private void handleCellInput(Label cell, int input)
+        {
+            int i = grid.GetRow(cell), j = grid.GetColumn(cell);
+            int[,] field = game.Field;
+            int oldValue = field[i, j];
+            field[i, j] = 0;
+            checkCell(i, j, oldValue, true);              
+            field[i, j] = input;
+            cell.Text = input == 0 ? "" : input.ToString();                        
+            checkCell(i, j, 0, true);
             refreshStatusLabel();
-            if (game.CorrectCells == Game.FIELD_SIZE*Game.FIELD_SIZE)
+
+            if (game.CorrectCells == Game.FIELD_SIZE * Game.FIELD_SIZE)
             {
                 Thread victoryThread = new Thread(victory);
                 victoryThread.Start();
@@ -230,6 +249,38 @@ namespace Sudoku
 
             Thread victoryThread = new Thread(victory);
             victoryThread.Start();
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (game.InitialState[cursori, cursorj] == 0 && e.KeyValue >= '0' && e.KeyValue <= '9')
+            {
+                handleCellInput(cells[cursori, cursorj], e.KeyValue - '0');
+            }
+            else if (e.KeyValue >= 37 && e.KeyValue <= 40)
+            {
+                cells[cursori, cursorj].BackColor = Color.Transparent;
+                switch (e.KeyValue)
+                {
+                    case 37:
+                        if (cursorj > 0)
+                            --cursorj;
+                        break;
+                    case 38:
+                        if (cursori > 0)
+                            --cursori;
+                        break;
+                    case 39:
+                        if (cursorj < Game.FIELD_SIZE - 1)
+                            ++cursorj;
+                        break;
+                    case 40:
+                        if (cursori < Game.FIELD_SIZE - 1)
+                            ++cursori;
+                        break;
+                }
+                cells[cursori, cursorj].BackColor = CURSOR_COLOR;
+            }
         }
     }
 }

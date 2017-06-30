@@ -35,11 +35,11 @@
             this.начатьСначалаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.подсказкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.победитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bgpanel = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.победитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.bgpanel.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -94,6 +94,13 @@
             this.подсказкаToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.подсказкаToolStripMenuItem.Text = "Подсказка";
             this.подсказкаToolStripMenuItem.Click += new System.EventHandler(this.подсказкаToolStripMenuItem_Click);
+            // 
+            // победитьToolStripMenuItem
+            // 
+            this.победитьToolStripMenuItem.Name = "победитьToolStripMenuItem";
+            this.победитьToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.победитьToolStripMenuItem.Text = "Победить";
+            this.победитьToolStripMenuItem.Click += new System.EventHandler(this.победитьToolStripMenuItem_Click);
             // 
             // bgpanel
             // 
@@ -154,13 +161,6 @@
             this.statusLabel.Size = new System.Drawing.Size(83, 17);
             this.statusLabel.Text = "Здравствуйте!";
             // 
-            // победитьToolStripMenuItem
-            // 
-            this.победитьToolStripMenuItem.Name = "победитьToolStripMenuItem";
-            this.победитьToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.победитьToolStripMenuItem.Text = "Победить";
-            this.победитьToolStripMenuItem.Click += new System.EventHandler(this.победитьToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +172,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "Main";
             this.Text = "Судоку";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.bgpanel.ResumeLayout(false);
