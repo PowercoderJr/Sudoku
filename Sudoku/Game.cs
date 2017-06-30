@@ -32,7 +32,11 @@ namespace Sudoku
             correctnessTable = new bool[FIELD_SIZE, FIELD_SIZE];
         }
 
-        public void generateLevel()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="difficulty">The higher value, the harder game. Zero is normal difficulty.</param>
+        public void generateLevel(int difficulty)
         {
             //Подготовка
             Random randomizer = new Random();
@@ -117,7 +121,11 @@ namespace Sudoku
             {
                 int rowIndex = 0;
                 for (int j = 0; j < 3 && rowIndex != ELIGIBLE_INDEX; ++j)
-                    rowIndex = randomizer.Next(MIN_INIT_INDEX, MAX_INIT_INDEX + 1);
+                    rowIndex = randomizer.Next(MIN_INIT_INDEX, MAX_INIT_INDEX + 1) - difficulty;
+                if (rowIndex < 1)
+                    rowIndex = 1;
+                else if (rowIndex > FIELD_SIZE - 1)
+                    rowIndex = FIELD_SIZE - 1;
                 do
                 {
                     int attempts = 0;
@@ -125,7 +133,7 @@ namespace Sudoku
                     pos = randomizer.Next(FIELD_SIZE);
                     do
                     {
-                        if (initialState[i, pos] == 0 && columnVolumes[pos] < MAX_INIT_INDEX && boxVolumes[i / BASE, pos / BASE] < MAX_INIT_INDEX)
+                        if (initialState[i, pos] == 0 && columnVolumes[pos] < MAX_INIT_INDEX - difficulty && boxVolumes[i / BASE, pos / BASE] < MAX_INIT_INDEX - difficulty)
                         {
                             initialState[i, pos] = solution[i, pos];
                             ++columnVolumes[pos];

@@ -32,7 +32,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.играToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьПолеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.начатьСначалаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оченьЛегкоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.легкоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сложноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оченьСложноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.очиститьПолеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.подсказкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.победитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +65,7 @@
             // 
             this.играToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьПолеToolStripMenuItem,
-            this.начатьСначалаToolStripMenuItem,
+            this.очиститьПолеToolStripMenuItem,
             this.toolStripMenuItem2,
             this.подсказкаToolStripMenuItem,
             this.победитьToolStripMenuItem});
@@ -70,17 +75,57 @@
             // 
             // создатьПолеToolStripMenuItem
             // 
+            this.создатьПолеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.оченьЛегкоToolStripMenuItem,
+            this.легкоToolStripMenuItem,
+            this.сToolStripMenuItem,
+            this.сложноToolStripMenuItem,
+            this.оченьСложноToolStripMenuItem});
             this.создатьПолеToolStripMenuItem.Name = "создатьПолеToolStripMenuItem";
             this.создатьПолеToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.создатьПолеToolStripMenuItem.Text = "Новая игра";
-            this.создатьПолеToolStripMenuItem.Click += new System.EventHandler(this.создатьПолеToolStripMenuItem_Click);
             // 
-            // начатьСначалаToolStripMenuItem
+            // оченьЛегкоToolStripMenuItem
             // 
-            this.начатьСначалаToolStripMenuItem.Name = "начатьСначалаToolStripMenuItem";
-            this.начатьСначалаToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.начатьСначалаToolStripMenuItem.Text = "Очистить поле";
-            this.начатьСначалаToolStripMenuItem.Click += new System.EventHandler(this.начатьСначалаToolStripMenuItem_Click);
+            this.оченьЛегкоToolStripMenuItem.Name = "оченьЛегкоToolStripMenuItem";
+            this.оченьЛегкоToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.оченьЛегкоToolStripMenuItem.Text = "Очень легко";
+            this.оченьЛегкоToolStripMenuItem.Click += new System.EventHandler(this.оченьЛегкоToolStripMenuItem_Click);
+            // 
+            // легкоToolStripMenuItem
+            // 
+            this.легкоToolStripMenuItem.Name = "легкоToolStripMenuItem";
+            this.легкоToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.легкоToolStripMenuItem.Text = "Легко";
+            this.легкоToolStripMenuItem.Click += new System.EventHandler(this.легкоToolStripMenuItem_Click);
+            // 
+            // сToolStripMenuItem
+            // 
+            this.сToolStripMenuItem.Name = "сToolStripMenuItem";
+            this.сToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.сToolStripMenuItem.Text = "Средне";
+            this.сToolStripMenuItem.Click += new System.EventHandler(this.сToolStripMenuItem_Click);
+            // 
+            // сложноToolStripMenuItem
+            // 
+            this.сложноToolStripMenuItem.Name = "сложноToolStripMenuItem";
+            this.сложноToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.сложноToolStripMenuItem.Text = "Сложно";
+            this.сложноToolStripMenuItem.Click += new System.EventHandler(this.сложноToolStripMenuItem_Click);
+            // 
+            // оченьСложноToolStripMenuItem
+            // 
+            this.оченьСложноToolStripMenuItem.Name = "оченьСложноToolStripMenuItem";
+            this.оченьСложноToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.оченьСложноToolStripMenuItem.Text = "Очень сложно";
+            this.оченьСложноToolStripMenuItem.Click += new System.EventHandler(this.оченьСложноToolStripMenuItem_Click);
+            // 
+            // очиститьПолеToolStripMenuItem
+            // 
+            this.очиститьПолеToolStripMenuItem.Name = "очиститьПолеToolStripMenuItem";
+            this.очиститьПолеToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.очиститьПолеToolStripMenuItem.Text = "Очистить поле";
+            this.очиститьПолеToolStripMenuItem.Click += new System.EventHandler(this.очиститьПолеToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -187,7 +232,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem играToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem начатьСначалаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem очиститьПолеToolStripMenuItem;
         private System.Windows.Forms.Panel bgpanel;
         private System.Windows.Forms.TableLayoutPanel grid;
         private System.Windows.Forms.ToolStripMenuItem создатьПолеToolStripMenuItem;
@@ -196,6 +241,11 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripMenuItem победитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem легкоToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сложноToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оченьЛегкоToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оченьСложноToolStripMenuItem;
     }
 }
 

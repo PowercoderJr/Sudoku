@@ -40,6 +40,10 @@ namespace Sudoku
                     cell.MouseEnter += (sender, args) =>
                     {
                         cells[cursori, cursorj].BackColor = Color.Transparent;
+
+
+
+
                         (sender as Label).BackColor = CURSOR_COLOR;
                         cursori = grid.GetRow(cell);
                         cursorj = grid.GetColumn(cell);
@@ -54,7 +58,7 @@ namespace Sudoku
                 }
 
             game = new Game();
-            restart();
+            restart(0);
         }
 
         private void onCellClicked(object sender, EventArgs e)
@@ -108,9 +112,9 @@ namespace Sudoku
             }
         }
 
-        private void restart()
-        {
-            game.generateLevel();
+        private void restart(int difficulty)
+        {         
+            game.generateLevel(difficulty);
             fillCells();
             refreshStatusLabel();
         }
@@ -220,14 +224,10 @@ namespace Sudoku
             grid.Cursor = hintMode ? Cursors.Help : Cursors.Default;
         }
 
-        private void создатьПолеToolStripMenuItem_Click(object sender, EventArgs e)
+        private void очиститьПолеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            restart();
-        }
-
-        private void начатьСначалаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            clear();
+            if (MessageBox.Show("Вы действительно хотите очистить поле?", "Подтвердите действие", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                clear();
         }
 
         private void подсказкаToolStripMenuItem_Click(object sender, EventArgs e)
@@ -281,6 +281,46 @@ namespace Sudoku
                 }
                 cells[cursori, cursorj].BackColor = CURSOR_COLOR;
             }
+        }
+
+        private void оченьЛегкоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (
+                   MessageBox.Show("Вы действительно хотите начать новую игру?", "Подтвердите действие",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                restart(-2);
+        }
+
+        private void легкоToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (
+                   MessageBox.Show("Вы действительно хотите начать новую игру?", "Подтвердите действие",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                restart(-1);
+        }
+
+        private void сToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (
+                   MessageBox.Show("Вы действительно хотите начать новую игру?", "Подтвердите действие",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                restart(0);
+        }
+
+        private void сложноToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (
+                   MessageBox.Show("Вы действительно хотите начать новую игру?", "Подтвердите действие",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                restart(1);
+        }
+
+        private void оченьСложноToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (
+                   MessageBox.Show("Вы действительно хотите начать новую игру?", "Подтвердите действие",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                restart(2);
         }
     }
 }
