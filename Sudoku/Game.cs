@@ -171,6 +171,10 @@ namespace Sudoku
                         correctnessTable[i, j] = true;
                         ++correctCells;
                     }
+                    else
+                    {
+                        correctnessTable[i, j] = false;
+                    }
         }
 
         public int[,] InitialState
